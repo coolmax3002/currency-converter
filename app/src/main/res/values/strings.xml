@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Currency Converter</string>
+    <string name="hello">Hello</string>
+    <string name="usd">USD</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="to">To</string>
+    <string name="cad">CAD</string>
+</resources>
