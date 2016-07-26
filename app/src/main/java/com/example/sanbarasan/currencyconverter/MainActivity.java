@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         firstSpinner.setAdapter(adapter);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, currency);
         secondSpinner.setAdapter(adapter2);
-        Map<Integer,List<String>> currencyMap = new HashMap<Integer, List<String>>();
+        Map<Double,List<String>> currencyMap = new HashMap<Double, List<String>>();
         ArrayList<ArrayList<String>> CurVal = new ArrayList<ArrayList<String>>();
 
         for (int i=0;i < currency.length; i++) {
@@ -45,6 +46,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        currencyMap.put(1.32, CurVal.get(0));
+        currencyMap.put(0.91, CurVal.get(1));
+        currencyMap.put(0.76, CurVal.get(2));
+        currencyMap.put(104.39, CurVal.get(3));
+        currencyMap.put(0.76, CurVal.get(4));
+        currencyMap.put(0.69, CurVal.get(5));
+        currencyMap.put(0.58, CurVal.get(6));
+        currencyMap.put(79.14, CurVal.get(7));
+        currencyMap.put(1.10, CurVal.get(8));
+        currencyMap.put(1.45, CurVal.get(9));
+        currencyMap.put(0.84, CurVal.get(10));
+        currencyMap.put(114.80, CurVal.get(11));
+        currencyMap.put(1.31, CurVal.get(12));
+        currencyMap.put(1.73, CurVal.get(13));
+        currencyMap.put(1.19, CurVal.get(14));
+        currencyMap.put(136.83, CurVal.get(15));
+        currencyMap.put(0.0096, CurVal.get(16));
+        currencyMap.put(0.013, CurVal.get(17));
+        currencyMap.put(0.0087, CurVal.get(18));
+        currencyMap.put(0.0073, CurVal.get(19));
+
+        String fromCur = firstSpinner.getOnItemClickListener().toString();
+        String toCur = secondSpinner.getOnItemClickListener().toString();
+        ArrayList<String> temp = new ArrayList<String>(); // added first array()
+
+        //temp.get();
+
 
 
         amountOfMoney.addTextChangedListener(new TextWatcher() {
