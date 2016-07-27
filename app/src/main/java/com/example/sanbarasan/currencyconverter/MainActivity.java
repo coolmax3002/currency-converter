@@ -70,10 +70,18 @@ public class MainActivity extends AppCompatActivity {
         String fromCur = firstSpinner.getOnItemClickListener().toString();
         String toCur = secondSpinner.getOnItemClickListener().toString();
         ArrayList<String> temp = new ArrayList<String>(); // added first array()
+        Map.Entry<Double, List<String>> entry = currencyMap.entrySet().iterator().next();
 
-        //temp.get();
+        double newValue = 0.0;
 
+        for (int z = 0; z <= 19; z++) {
+            if (CurVal.get(z).equals(fromCur) && CurVal.get(z).equals(toCur)){
+                newValue = entry.getKey();
+            }
 
+        }
+
+            final double finalValue = newValue;
 
         amountOfMoney.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable USDTxt) {
                 if (USDTxt.length() > 0) {
                     int USDVal = Integer.parseInt(USDTxt.toString());
-                    CovertValue.setText(String.valueOf(USDVal * 0.76));
+                    CovertValue.setText(String.valueOf(USDVal * finalValue));
                 }
             }
         });
