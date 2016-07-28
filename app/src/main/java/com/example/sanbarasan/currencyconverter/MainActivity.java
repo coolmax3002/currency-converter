@@ -1,5 +1,6 @@
 package com.example.sanbarasan.currencyconverter;
 
+import android.content.DialogInterface;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
         final Spinner firstSpinner = (Spinner) findViewById(R.id.fromSpinner);
         final Spinner secondSpinner = (Spinner) findViewById(R.id.toSpinner);
         String[] currency = {"USD", "CAD", "EURO", "POUND", "YEN"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, currency);
-        firstSpinner.setAdapter(adapter);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, currency);
-        secondSpinner.setAdapter(adapter2);
-        Map<Double,List<String>> currencyMap = new HashMap<Double, List<String>>();
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, currency);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+        firstSpinner.setAdapter(spinnerArrayAdapter);
+        secondSpinner.setAdapter(spinnerArrayAdapter);
+
+
+        Map< List<String>, Double> currencyMap = new HashMap< List<String>, Double>();
         ArrayList<ArrayList<String>> CurVal = new ArrayList<ArrayList<String>>();
 
         for (int i=0;i < currency.length; i++) {
@@ -46,42 +52,38 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        currencyMap.put(1.32, CurVal.get(0));
-        currencyMap.put(0.91, CurVal.get(1));
-        currencyMap.put(0.76, CurVal.get(2));
-        currencyMap.put(104.39, CurVal.get(3));
-        currencyMap.put(0.76, CurVal.get(4));
-        currencyMap.put(0.69, CurVal.get(5));
-        currencyMap.put(0.58, CurVal.get(6));
-        currencyMap.put(79.14, CurVal.get(7));
-        currencyMap.put(1.10, CurVal.get(8));
-        currencyMap.put(1.45, CurVal.get(9));
-        currencyMap.put(0.84, CurVal.get(10));
-        currencyMap.put(114.80, CurVal.get(11));
-        currencyMap.put(1.31, CurVal.get(12));
-        currencyMap.put(1.73, CurVal.get(13));
-        currencyMap.put(1.19, CurVal.get(14));
-        currencyMap.put(136.83, CurVal.get(15));
-        currencyMap.put(0.0096, CurVal.get(16));
-        currencyMap.put(0.013, CurVal.get(17));
-        currencyMap.put(0.0087, CurVal.get(18));
-        currencyMap.put(0.0073, CurVal.get(19));
 
-        String fromCur = firstSpinner.getOnItemClickListener().toString();
-        String toCur = secondSpinner.getOnItemClickListener().toString();
-        ArrayList<String> temp = new ArrayList<String>(); // added first array()
-        Map.Entry<Double, List<String>> entry = currencyMap.entrySet().iterator().next();
+        currencyMap.put(CurVal.get(0), 1.32);
+        currencyMap.put(CurVal.get(1), 0.91);
+        currencyMap.put(CurVal.get(2),0.76);
+        currencyMap.put(CurVal.get(3), 104.39);
+        currencyMap.put(CurVal.get(4), 0.76);
+        currencyMap.put(CurVal.get(5), 0.69);
+        currencyMap.put(CurVal.get(6),0.58);
+        currencyMap.put(CurVal.get(7), 79.14);
+        currencyMap.put(CurVal.get(8), 1.10);
+        currencyMap.put(CurVal.get(9),1.45);
+        currencyMap.put(CurVal.get(10), 0.84);
+        currencyMap.put(CurVal.get(11),114.80);
+        currencyMap.put(CurVal.get(12),1.31);
+        currencyMap.put(CurVal.get(13),1.73);
+        currencyMap.put(CurVal.get(14),1.19);
+        currencyMap.put(CurVal.get(15),136.83);
+        currencyMap.put(CurVal.get(16),0.0096);
+        currencyMap.put(CurVal.get(17),0.013);
+        currencyMap.put(CurVal.get(18),0.0087);
+        currencyMap.put(CurVal.get(19),0.0073);
 
-        double newValue = 0.0;
 
-        for (int z = 0; z <= 19; z++) {
-            if (CurVal.get(z).equals(fromCur) && CurVal.get(z).equals(toCur)){
-                newValue = entry.getKey();
+        String fromCur = "USD", toCur="CAD";
+
+        for (int z = 0; z < CurVal.size(); z++) {
+            if (((CurVal.get(z).get(0).compareTo(fromCur)) == 0) && ((CurVal.get(z).get(1).compareTo(toCur)) == 0)) {
+                CovertValue.setText(String.valueOf(currencyMap.get(CurVal.get(z))));
+                //CovertValue.setText(String.valueOf(z));
+                //boo = true;
             }
-
         }
-
-            final double finalValue = newValue;
 
         amountOfMoney.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,14 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                CovertValue.setText("");
+                //CovertValue.setText("");
             }
 
             @Override
             public void afterTextChanged(Editable USDTxt) {
                 if (USDTxt.length() > 0) {
                     int USDVal = Integer.parseInt(USDTxt.toString());
-                    CovertValue.setText(String.valueOf(USDVal * finalValue));
+                    //CovertValue.setText(String.valueOf(USDVal * 1));
                 }
             }
         });
