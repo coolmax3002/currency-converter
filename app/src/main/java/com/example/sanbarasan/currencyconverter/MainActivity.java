@@ -26,7 +26,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private String fromCur="USD", toCur="USD";
-    private double factor;
+    private double factor=1;
     private Map< List<String>, Double> currencyMap = new HashMap< List<String>, Double>();
     private ArrayList<ArrayList<String>> CurVal = new ArrayList<ArrayList<String>>();
 
@@ -35,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
     public void setFromCur (String s) {fromCur=s; }
 
     public String getFromCur() { return fromCur; }
-
-    //public void setFactor (double f) {factor = f;}
-
-    //public double getFactor () {return factor; }
 
     public void setToCur (String s) {toCur=s; }
 
@@ -121,9 +117,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        secondSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setToCur(currency[i]);
+                factor = getFactor(getFromCur(), getToCur());
+                CovertValue.setText(String.valueOf(factor));
+                //CovertValue.setText(getFromCur());
 
+            }
 
-
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //fromCur = currency[0];
+            }
+        });
 
 
         amountOfMoney.addTextChangedListener(new TextWatcher() {
@@ -138,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable USDTxt) {
-                if (USDTxt.length() > 0) {
+                if (USDTxt.length() > 0 && USDTxt.length() < 10) {
                     int USDVal = Integer.parseInt(USDTxt.toString());
                     CovertValue.setText(String.valueOf(USDVal * factor));
                 }
