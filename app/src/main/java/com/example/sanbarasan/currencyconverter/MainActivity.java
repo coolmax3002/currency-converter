@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         tempSelAdap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         firstSpinner.setAdapter(tempSelAdap);
         secondSpinner.setAdapter(tempSelAdap);
-        
+
         whichUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int b, long l) {
