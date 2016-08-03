@@ -1,6 +1,7 @@
 package com.example.sanbarasan.currencyconverter;
 
 import android.content.DialogInterface;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -25,10 +26,17 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
+
+
     private String fromCur="USD", toCur="USD";
+    private String selectConv="metric";
     private double factor=1;
     private Map< List<String>, Double> currencyMap = new HashMap< List<String>, Double>();
+    private Map< List<String>, Double> unitMap = new HashMap< List<String>, Double>();
     private ArrayList<ArrayList<String>> CurVal = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> unitVal = new ArrayList<ArrayList<String>>();
 
 
 
@@ -37,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     public String getFromCur() { return fromCur; }
 
     public void setToCur (String s) {toCur=s; }
+
+    public void setSeletedConv (String z) {selectConv=z;}
+
+    public String getSeletedConv () {return selectConv;}
 
     public String getToCur() { return toCur; }
 
@@ -51,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +72,34 @@ public class MainActivity extends AppCompatActivity {
         final TextView CovertValue = (TextView) findViewById(R.id.CADValue);
         final Spinner firstSpinner = (Spinner) findViewById(R.id.fromSpinner);
         final Spinner secondSpinner = (Spinner) findViewById(R.id.toSpinner);
+        final Spinner whichUnit = (Spinner) findViewById(R.id.unitConvert);
+        final String[] selector = {"Metrics", "Currency"};
+        final String[] metrics = {"Inch","Feet","Yard","Millimeter","Centimeter","Meter"};
         final String[] currency = {"USD", "CAD", "EURO", "POUND", "YEN"};
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,   android.R.layout.simple_spinner_item, currency);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        firstSpinner.setAdapter(spinnerArrayAdapter);
-        secondSpinner.setAdapter(spinnerArrayAdapter);
+        String[] var = {""};
+        ArrayAdapter<String> TempUnitAdap = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, selector);
+        TempUnitAdap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        whichUnit.setAdapter(TempUnitAdap);
 
+        ArrayAdapter<String> tempSelAdap  = new ArrayAdapter<String>(this, android .R.layout.simple_spinner_item, metrics);
+        tempSelAdap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        firstSpinner.setAdapter(tempSelAdap);
+        secondSpinner.setAdapter(tempSelAdap);
+        
+        whichUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int b, long l) {
+                setSeletedConv(selector[b]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        //CovertValue.setText(String.valueOf(select));
 
 
         for (int i=0;i < currency.length; i++) {
@@ -77,7 +112,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
+       /* for (int e=0;e < metrics.length; e++) {
+            for (int r=0;r < metrics.length; r++) {
+                if (e != r) {
+                    ArrayList<String> temp2 = new ArrayList<String>(); // added first array()
+                    temp2.add(currency[e]);
+                    temp2.add(currency[r]);
+                    unitVal.add(temp2);  //added second array
+                }
+            }
+        }
+*/
         currencyMap.put(CurVal.get(0), 1.32);
         currencyMap.put(CurVal.get(1), 0.91);
         currencyMap.put(CurVal.get(2),0.76);
@@ -98,15 +143,18 @@ public class MainActivity extends AppCompatActivity {
         currencyMap.put(CurVal.get(17),0.013);
         currencyMap.put(CurVal.get(18),0.0087);
         currencyMap.put(CurVal.get(19),0.0073);
-
-
+/*
+        unitMap.put(unitVal.get(0),12),
+        unitMap.put(unitVal.get(1),3),
+                unitMap.put(unitVal(2),)
+*/
 
         firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 setFromCur(currency[i]);
                 factor = getFactor(getFromCur(), getToCur());
-                CovertValue.setText(String.valueOf(factor));
+                //CovertValue.setText(String.valueOf(factor));
                 //CovertValue.setText(getFromCur());
 
             }
@@ -122,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 setToCur(currency[i]);
                 factor = getFactor(getFromCur(), getToCur());
-                CovertValue.setText(String.valueOf(factor));
-                //CovertValue.setText(getFromCur());
+                //CovertValue.setText(String.valueOf(factor));
+
 
             }
 
@@ -148,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable USDTxt) {
                 if (USDTxt.length() > 0 && USDTxt.length() < 10) {
                     int USDVal = Integer.parseInt(USDTxt.toString());
-                    CovertValue.setText(String.valueOf(USDVal * factor));
+                   // CovertValue.setText(String.valueOf(USDVal * factor));
                 }
             }
         });
