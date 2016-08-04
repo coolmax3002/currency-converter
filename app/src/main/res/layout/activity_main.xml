@@ -12,17 +12,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Currency Converter"
-        android:id="@+id/textView" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="From:"
         android:id="@+id/From"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -73,7 +66,26 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/CADValue"
         android:layout_alignBottom="@+id/toSpinner"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_alignLeft="@+id/unitConvert"
+        android:layout_alignStart="@+id/unitConvert" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select unit convert"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/unitConvert"
+        android:layout_toRightOf="@+id/To"
+        android:layout_toEndOf="@+id/To" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unitConvert"
+        android:layout_marginRight="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/amountOfUsd"
+        android:layout_alignEnd="@+id/amountOfUsd" />
 
 </RelativeLayout>
