@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         final String[] selector = {"Metrics", "Currency"};
         final String[] metrics = {"Inch","Feet","Yard","Millimeter","Centimeter","Meter"};
         final String[] currency = {"USD", "CAD", "EURO", "POUND", "YEN"};
-        String[] var = {""};
         ArrayAdapter<String> TempUnitAdap = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, selector);
         TempUnitAdap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         whichUnit.setAdapter(TempUnitAdap);
@@ -89,7 +88,20 @@ public class MainActivity extends AppCompatActivity {
         whichUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int b, long l) {
-                setSeletedConv(selector[b]);
+
+                if (selector[b].equalsIgnoreCase("Currency")) {
+                    ArrayAdapter<String> fVal = new ArrayAdapter<String>(firstSpinner.getContext(), R.layout.support_simple_spinner_dropdown_item, currency);
+                    firstSpinner.setAdapter(fVal);
+                    ArrayAdapter<String> sVal = new ArrayAdapter<String>(secondSpinner.getContext(), R.layout.support_simple_spinner_dropdown_item, currency);
+                    secondSpinner.setAdapter(sVal);
+                } else if (selector[b].equalsIgnoreCase("Metrics")) {
+                    ArrayAdapter<String> fVal = new ArrayAdapter<String>(firstSpinner.getContext(), R.layout.support_simple_spinner_dropdown_item, metrics);
+                    firstSpinner.setAdapter(fVal);
+                    ArrayAdapter<String> sVal = new ArrayAdapter<String>(secondSpinner.getContext(), R.layout.support_simple_spinner_dropdown_item, metrics);
+                    secondSpinner.setAdapter(sVal);
+
+                }
+
             }
 
             @Override
@@ -112,17 +124,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-       /* for (int e=0;e < metrics.length; e++) {
+        for (int e=0;e < metrics.length; e++) {
             for (int r=0;r < metrics.length; r++) {
                 if (e != r) {
                     ArrayList<String> temp2 = new ArrayList<String>(); // added first array()
-                    temp2.add(currency[e]);
-                    temp2.add(currency[r]);
+                    temp2.add(metrics[e]);
+                    temp2.add(metrics[r]);
                     unitVal.add(temp2);  //added second array
                 }
             }
         }
-*/
+
         currencyMap.put(CurVal.get(0), 1.32);
         currencyMap.put(CurVal.get(1), 0.91);
         currencyMap.put(CurVal.get(2),0.76);
@@ -143,11 +155,41 @@ public class MainActivity extends AppCompatActivity {
         currencyMap.put(CurVal.get(17),0.013);
         currencyMap.put(CurVal.get(18),0.0087);
         currencyMap.put(CurVal.get(19),0.0073);
-/*
-        unitMap.put(unitVal.get(0),12),
-        unitMap.put(unitVal.get(1),3),
-                unitMap.put(unitVal(2),)
-*/
+
+        unitMap.put(unitVal.get(0),0.0833);
+        unitMap.put(unitVal.get(1),36.0);
+        unitMap.put(unitVal.get(2),25.4);
+        unitMap.put(unitVal.get(3),2.54);
+        unitMap.put(unitVal.get(4),0.0254);
+        unitMap.put(unitVal.get(5),12.0);
+        unitMap.put(unitVal.get(6),25.4);
+        unitMap.put(unitVal.get(7),25.4);
+        unitMap.put(unitVal.get(8),25.4);
+        unitMap.put(unitVal.get(9),25.4);
+        unitMap.put(unitVal.get(10),25.4);
+        unitMap.put(unitVal.get(11),36.0);
+        unitMap.put(unitVal.get(12),25.4);
+        unitMap.put(unitVal.get(13),25.4);
+        unitMap.put(unitVal.get(14),25.4);
+        unitMap.put(unitVal.get(15),25.4);
+        unitMap.put(unitVal.get(16),25.4);
+        unitMap.put(unitVal.get(17),25.4);
+        unitMap.put(unitVal.get(18),25.4);
+        unitMap.put(unitVal.get(19),25.4);
+        unitMap.put(unitVal.get(20),25.4);
+        unitMap.put(unitVal.get(21),25.4);
+        unitMap.put(unitVal.get(22),25.4);
+        unitMap.put(unitVal.get(23),25.4);
+        unitMap.put(unitVal.get(24),25.4);
+        unitMap.put(unitVal.get(25),25.4);
+        unitMap.put(unitVal.get(26),25.4);
+        unitMap.put(unitVal.get(27),25.4);
+        unitMap.put(unitVal.get(28),25.4);
+        unitMap.put(unitVal.get(29),25.4);
+        unitMap.put(unitVal.get(30),25.4);
+
+
+
 
         firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
