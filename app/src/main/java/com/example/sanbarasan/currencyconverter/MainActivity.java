@@ -32,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     private String fromCur="USD", toCur="USD";
     private String selectConv="metric";
+    private String selectUnit = "";
+    private String fromUnit="inch", toUnit="inch";
+    private double multiple = 1;
     private double factor=1;
+    private double factor2=1;
     private Map< List<String>, Double> currencyMap = new HashMap< List<String>, Double>();
     private Map< List<String>, Double> unitMap = new HashMap< List<String>, Double>();
     private ArrayList<ArrayList<String>> CurVal = new ArrayList<ArrayList<String>>();
@@ -46,7 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void setToCur (String s) {toCur=s; }
 
+    public void setToUnit (String q) {toUnit=q;}
+
+    public String getToUnit (){return toUnit;}
+
+    public void setFromUnit (String h) {fromUnit=h;}
+
+    public String getFromUnit () {return fromUnit;}
+
     public void setSeletedConv (String z) {selectConv=z;}
+
+    public void setSelectedUnit (String g) {selectUnit=g;}
+
+    public String getSelectedUnit (){return selectUnit;}
 
     public String getSeletedConv () {return selectConv;}
 
@@ -61,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
         }
         return 1;
     };
+    public double secondFactor (String one, String two){
+    for (int y = 0; y < CurVal.size(); y++) {
+        if (((CurVal.get(y).get(0).compareTo(one)) == 0) && ((CurVal.get(y).get(1).compareTo(two)) == 0)) {
+            return unitMap.get(unitVal.get(y));
+        }
+    }
+    return 1;
+};
 
 
 
@@ -101,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     secondSpinner.setAdapter(sVal);
 
                 }
-
+               setSeletedConv( selector[b]);
             }
 
             @Override
@@ -162,40 +186,45 @@ public class MainActivity extends AppCompatActivity {
         unitMap.put(unitVal.get(3),2.54);
         unitMap.put(unitVal.get(4),0.0254);
         unitMap.put(unitVal.get(5),12.0);
-        unitMap.put(unitVal.get(6),25.4);
-        unitMap.put(unitVal.get(7),25.4);
-        unitMap.put(unitVal.get(8),25.4);
-        unitMap.put(unitVal.get(9),25.4);
-        unitMap.put(unitVal.get(10),25.4);
-        unitMap.put(unitVal.get(11),36.0);
-        unitMap.put(unitVal.get(12),25.4);
-        unitMap.put(unitVal.get(13),25.4);
-        unitMap.put(unitVal.get(14),25.4);
-        unitMap.put(unitVal.get(15),25.4);
-        unitMap.put(unitVal.get(16),25.4);
-        unitMap.put(unitVal.get(17),25.4);
-        unitMap.put(unitVal.get(18),25.4);
-        unitMap.put(unitVal.get(19),25.4);
-        unitMap.put(unitVal.get(20),25.4);
-        unitMap.put(unitVal.get(21),25.4);
-        unitMap.put(unitVal.get(22),25.4);
-        unitMap.put(unitVal.get(23),25.4);
-        unitMap.put(unitVal.get(24),25.4);
-        unitMap.put(unitVal.get(25),25.4);
-        unitMap.put(unitVal.get(26),25.4);
-        unitMap.put(unitVal.get(27),25.4);
-        unitMap.put(unitVal.get(28),25.4);
-        unitMap.put(unitVal.get(29),25.4);
-        unitMap.put(unitVal.get(30),25.4);
+        unitMap.put(unitVal.get(6),0.3333);
+        unitMap.put(unitVal.get(7),304.8);
+        unitMap.put(unitVal.get(8),30.84);
+        unitMap.put(unitVal.get(9),0.3048);
+        unitMap.put(unitVal.get(10),36.0);
+        unitMap.put(unitVal.get(11),3.0);
+        unitMap.put(unitVal.get(12),914.4);
+        unitMap.put(unitVal.get(13),91.44);
+        unitMap.put(unitVal.get(14),0.9144);
+        unitMap.put(unitVal.get(15),0.0393701);
+        unitMap.put(unitVal.get(16),0.00328084);
+        unitMap.put(unitVal.get(17),0.001093);
+        unitMap.put(unitVal.get(18),0.1);
+        unitMap.put(unitVal.get(19),0.001);
+        unitMap.put(unitVal.get(20),0.393701);
+        unitMap.put(unitVal.get(21),0.0328084);
+        unitMap.put(unitVal.get(22),0.0109361);
+        unitMap.put(unitVal.get(23),10.0);
+        unitMap.put(unitVal.get(24),0.01);
+        unitMap.put(unitVal.get(25),39.3701);
+        unitMap.put(unitVal.get(26),3.28084);
+        unitMap.put(unitVal.get(27),1.09361);
+        unitMap.put(unitVal.get(28),1000.0);
+        unitMap.put(unitVal.get(29),100.0);
 
 
 
 
+        final int text = whichUnit.getSelectedItemPosition();
         firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setFromCur(currency[i]);
-                factor = getFactor(getFromCur(), getToCur());
+                if (selectConv.equalsIgnoreCase("Currency")) {
+                    setFromCur(currency[i]);
+                    factor = getFactor(getFromCur(), getToCur());
+                }else{
+                    setSelectedUnit(metrics[i]);
+                    factor2 = secondFactor(getFromUnit(), getToUnit());
+                }
                 //CovertValue.setText(String.valueOf(factor));
                 //CovertValue.setText(getFromCur());
 
@@ -210,9 +239,14 @@ public class MainActivity extends AppCompatActivity {
         secondSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                setToCur(currency[i]);
-                factor = getFactor(getFromCur(), getToCur());
-                //CovertValue.setText(String.valueOf(factor));
+                if (selectConv.equalsIgnoreCase("Currency")) {
+                    setToCur(currency[i]);
+                    factor = getFactor(getFromCur(), getToCur());
+                }else{
+                    setSelectedUnit(metrics[i]);
+                    factor2 = secondFactor(getFromUnit(), getToUnit());
+                }
+
 
 
             }
@@ -237,8 +271,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable USDTxt) {
                 if (USDTxt.length() > 0 && USDTxt.length() < 10) {
-                    int USDVal = Integer.parseInt(USDTxt.toString());
-                   // CovertValue.setText(String.valueOf(USDVal * factor));
+                    if (selectConv.equalsIgnoreCase("Currency")) {
+                        int USDVal = Integer.parseInt(USDTxt.toString());
+                        CovertValue.setText(String.valueOf(USDVal * factor));
+                    }else{
+                        int USDVal = Integer.parseInt(USDTxt.toString());
+                        CovertValue.setText(String.valueOf(USDVal * factor2));
+                    }
                 }
             }
         });
