@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         return 1;
     };
     public double secondFactor (String one, String two){
-    for (int y = 0; y < CurVal.size(); y++) {
-        if (((CurVal.get(y).get(0).compareTo(one)) == 0) && ((CurVal.get(y).get(1).compareTo(two)) == 0)) {
+    for (int y = 0; y < unitVal.size(); y++) {
+        if (((unitVal.get(y).get(0).compareTo(one)) == 0) && ((unitVal.get(y).get(1).compareTo(two)) == 0)) {
             return unitMap.get(unitVal.get(y));
         }
     }
@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                setSeletedConv( selector[b]);
+                CovertValue.setText(null);
+                amountOfMoney.setText(null);
+
             }
 
             @Override
@@ -181,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         currencyMap.put(CurVal.get(19),0.0073);
 
         unitMap.put(unitVal.get(0),0.0833);
-        unitMap.put(unitVal.get(1),36.0);
+        unitMap.put(unitVal.get(1),0.027777);
         unitMap.put(unitVal.get(2),25.4);
         unitMap.put(unitVal.get(3),2.54);
         unitMap.put(unitVal.get(4),0.0254);
@@ -214,19 +217,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        final int text = whichUnit.getSelectedItemPosition();
+
         firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (selectConv.equalsIgnoreCase("Currency")) {
                     setFromCur(currency[i]);
                     factor = getFactor(getFromCur(), getToCur());
-                }else{
-                    setSelectedUnit(metrics[i]);
+
+                }else if (selectConv.equalsIgnoreCase("Metrics")){
+                    setFromUnit(metrics[i]);
                     factor2 = secondFactor(getFromUnit(), getToUnit());
+
+
+
                 }
-                //CovertValue.setText(String.valueOf(factor));
-                //CovertValue.setText(getFromCur());
+
 
             }
 
@@ -242,9 +248,12 @@ public class MainActivity extends AppCompatActivity {
                 if (selectConv.equalsIgnoreCase("Currency")) {
                     setToCur(currency[i]);
                     factor = getFactor(getFromCur(), getToCur());
-                }else{
-                    setSelectedUnit(metrics[i]);
+
+                } else if (selectConv.equalsIgnoreCase("Metrics")) {
+                    setToUnit(metrics[i]);
                     factor2 = secondFactor(getFromUnit(), getToUnit());
+
+
                 }
 
 
@@ -265,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                //CovertValue.setText("");
+                CovertValue.setText("");
             }
 
             @Override
@@ -274,9 +283,11 @@ public class MainActivity extends AppCompatActivity {
                     if (selectConv.equalsIgnoreCase("Currency")) {
                         int USDVal = Integer.parseInt(USDTxt.toString());
                         CovertValue.setText(String.valueOf(USDVal * factor));
-                    }else{
+
+                    }else if (selectConv.equalsIgnoreCase("Metrics")){
                         int USDVal = Integer.parseInt(USDTxt.toString());
                         CovertValue.setText(String.valueOf(USDVal * factor2));
+                        //CovertValue.setText(String.valueOf(factor2));
                     }
                 }
             }
