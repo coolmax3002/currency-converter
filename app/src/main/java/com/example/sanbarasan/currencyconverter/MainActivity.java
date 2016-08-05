@@ -230,9 +230,8 @@ public class MainActivity extends AppCompatActivity {
                     factor2 = secondFactor(getFromUnit(), getToUnit());
 
 
-
                 }
-
+                amountOfMoney.setText(null);
 
             }
 
@@ -256,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-
+                amountOfMoney.setText(null);
 
             }
 
